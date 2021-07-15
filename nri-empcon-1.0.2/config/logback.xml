@@ -1,0 +1,37 @@
+<configuration>
+    # Console appender
+    <appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            # Pattern of log message for console appender
+            <Pattern>%d{yyyy-MM-dd HH:mm:ss} %p %m%n</Pattern>
+        </layout>
+    </appender>
+
+    <appender name="fout" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>logs/plugin.log</file>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <Pattern>
+					%d{yyyy-MM-dd HH:mm:ss} [%thread] %level %logger{35} - %msg%n
+            </Pattern>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+            <FileNamePattern>logs/archived/plugin.%i.log
+            </FileNamePattern>
+            <MinIndex>1</MinIndex>
+            <MaxIndex>4</MaxIndex>
+        </rollingPolicy>
+        <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+            <MaxFileSize>8MB</MaxFileSize>
+        </triggeringPolicy>
+    </appender>
+    # Override log level for specified package
+    <logger name="com.newrelic.fit.empcon" level="DEBUG">
+        <appender-ref ref="fout" />
+    </logger>
+    <!-- <logger name="com.salesforce.emp.connector" level="INFO">
+        <appender-ref ref="fout" />
+    </logger> -->
+    <root level="INFO">
+        <appender-ref ref="NOP" />
+    </root>
+</configuration>
