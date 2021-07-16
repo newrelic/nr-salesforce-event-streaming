@@ -1,0 +1,13 @@
+{
+  "event": {
+    "createdDate": "2021-01-22T01:40:40.736Z",
+    "replayId": 196,
+    "type": "updated"
+  },
+  "sobject": {
+    "Description__c": "new lead",
+    "Id": "a005g000001WGfMAAW",
+    "Status__c": "Open",
+    "Name": "INV-0002"
+  }
+}

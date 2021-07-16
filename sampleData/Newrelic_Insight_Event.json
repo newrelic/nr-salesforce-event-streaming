@@ -1,0 +1,18 @@
+{
+  "event": {
+    "channel": "/topic/InvoiceStatementUpdates",
+    "env": "production1",
+    "event_createdDate": "2021-01-22T01:40:40.736Z",
+    "event_replayId": "196",
+    "event_type": "updated",
+    "relayfrom": -1,
+    "role": "empRole1",
+    "sobject_Description__c": "new lead",
+    "sobject_Id": "a005g000001WGfMAAW",
+    "sobject_Name": "INV-0002",
+    "sobject_Status__c": "Open",
+    "timestamp": 1611279642248,
+    "url": "https://myabc123-dev-ed.my.salesforce.com",
+    "username": "abc123@something.domain"
+  }
+}

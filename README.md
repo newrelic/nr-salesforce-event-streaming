@@ -124,6 +124,13 @@ Configure the following setting in config/empcon-config.yml
 - Look for `c.n.fit.empcon.MonitoringConsumer - ==>subscribed:` in the logs/plugin.log file. If found, it indicates the integration has successfully subscribed to the channel. If you have multiple instances defined in the configue file, you should expect multiple `c.n.fit.empcon.MonitoringConsumer - ==>subscribed:` message in the log file.
 - If `c.n.fit.empcon.MonitoringConsumer - ==>subscribed:` cannot be found in the log file, check logs/plugin.err for detail why the integration is unable to subscrsibe to the channel defined.
 
+## 6. Development/Building
+- Clone the repo
+- Build 
+```
+./gradlew clean build
+```
+
 ---
 
 > Sample empcon-config.yml
@@ -221,7 +228,7 @@ instances:
     "event_createdDate": "2021-01-22T01:40:40.736Z",
     "event_replayId": "196",
     "event_type": "updated",
-    "relayfrom": -1,
+    "replayfrom": -1,
     "role": "empRole1",
     "sobject_Description__c": "new lead",
     "sobject_Id": "a005g000001WGfMAAW",
