@@ -24,12 +24,12 @@ Refer to the following links for more details.
 
 ## 2. Installation
 
-#### Unzip the tar file to an existing directory
+#### Download and unzip the [package nri-empcon-*.tar.gz](https://github.com/newrelic-experimental/nr-salesforce-event-streaming/releases)  to an existing directory
 
 ```
 # mkdir -p /app/nri-empcon
 # cd /app/nri-empcon
-# tar xvf nri-empcon-<VERSION>.tar
+# tar xvfz nri-empcon-<VERSION>.tar.gz
 
 ```
 
