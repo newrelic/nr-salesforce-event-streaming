@@ -25,12 +25,12 @@
         </triggeringPolicy>
     </appender>
     # Override log level for specified package
-    <logger name="com.newrelic.fit.empcon" level="DEBUG">
+    <logger name="com.newrelic.fit.empcon" level="INFO">
         <appender-ref ref="fout" />
     </logger>
-    <!-- <logger name="com.salesforce.emp.connector" level="INFO">
+    <logger name="com.salesforce.emp.connector" level="INFO">
         <appender-ref ref="fout" />
-    </logger> -->
+    </logger>
     <root level="INFO">
         <appender-ref ref="NOP" />
     </root>

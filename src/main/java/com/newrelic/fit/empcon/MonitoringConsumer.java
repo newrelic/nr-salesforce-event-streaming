@@ -36,14 +36,14 @@ public class MonitoringConsumer {
     private EmpConnector connector = null;
     private InsightsClient insightsClient = null;
     private Instance instance = null;
-    private long startTime = System.currentTimeMillis();
-    private long messageProcessed = 0;
+
+    private Stats stats=null;
 
     public TopicSubscription connect(Instance instance, InsightsClient client) {
         logger.info("connecting: " + instance.getUrl());
         this.insightsClient = client;
         this.instance = instance;
-
+        this.stats= new Stats(instance,client);
         try {
             connector = createConsumer(instance);
         } catch (Exception e) {
@@ -158,7 +158,7 @@ public class MonitoringConsumer {
         if (result != true) {
             logger.error("Unable to post events to Insights");
         }
-        messageProcessed++;
+        stats.incrMessageCount();
 
     }
 
@@ -169,5 +169,7 @@ public class MonitoringConsumer {
         }
     }
 
-
+    public Stats getStats() {
+        return stats;
+    }
 }

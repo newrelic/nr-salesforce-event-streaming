@@ -115,6 +115,7 @@ public class ConfigParse {
     public static List<Instance> readConfigFileOrEnv(String configFile) {
         final boolean NR_SF_ENV_CONF = Boolean.parseBoolean(System.getenv().getOrDefault("NR_SF_ENV_CONF", "FALSE"));
         if (!NR_SF_ENV_CONF) {
+            logger.info("NR_SF_ENV_CONF is NOT set, use empcon-config.yml for configuration!");
             return readConfig(configFile);
         }
 
@@ -144,7 +145,9 @@ public class ConfigParse {
             String NR_SF_TOPICS = env.getOrDefault("NR_SF_TOPICS", NR_SF_TOPICS_DEFAULT);
             String NR_SF_REPLAYFROM = env.getOrDefault("NR_SF_REPLAYFROM", "-1");
             String NR_SF_LABELS = env.getOrDefault("NR_SF_LABELS", "FALSE");
+            String NR_SF_EVENT_PREFIX = env.getOrDefault("NR_SF_EVENT_PREFIX", "SF");
 
+            Instance.setEventPrefix(NR_SF_EVENT_PREFIX);
 
             if (!NR_SF_INSIGHTS_URL.equals("FALSE")) {
                 Instance.setInsightsUrl(NR_SF_INSIGHTS_URL);

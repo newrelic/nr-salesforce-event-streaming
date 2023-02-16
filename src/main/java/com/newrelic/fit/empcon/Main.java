@@ -10,12 +10,15 @@ import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.util.List;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 
 public class Main {
 
     private static String configDir = "./config";
-    private static Logger logger = LoggerFactory.getLogger(Main.class);
+
 
     static {
         if (System.getProperty("ConfigDir") != null) {
@@ -23,6 +26,7 @@ public class Main {
         }
         System.setProperty("logback.configurationFile", configDir + File.separator + "logback.xml");
     }
+    private static Logger logger = LoggerFactory.getLogger(Main.class);
 
     public static void main(String[] args) {
         logger.info("Starting.. ");
@@ -49,13 +53,14 @@ public class Main {
             c.setProxyPassword(Instance.getProxyPassword());
         }
         client.init(c);
-
-
+        ScheduledExecutorService executor = Executors.newScheduledThreadPool(1);
         configuredInstances.forEach((instance) -> {
             logger.info("Creating consumer: " + instance);
             MonitoringConsumer monitoringConsumer = new MonitoringConsumer();
-
             TopicSubscription subscription = monitoringConsumer.connect(instance, client);
+            executor.scheduleAtFixedRate(() -> {
+                monitoringConsumer.getStats().postStats();
+            }, 0, 60, TimeUnit.SECONDS);
 
             Runtime.getRuntime().addShutdownHook(new Thread() {
                 public void run() {
@@ -70,6 +75,7 @@ public class Main {
             public void run() {
                 logger.info("stop InsightsClient...");
                 client.destroyClient();
+                executor.shutdown();
             }
         });
     }
