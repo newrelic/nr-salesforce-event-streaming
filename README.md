@@ -10,6 +10,47 @@ Refer to the following links for more details.
 - [SalesForce Streaming API ](https://developer.salesforce.com/docs/atlas.en-us.api_streaming.meta/api_streaming/intro_stream.htm)
 - [EMP Connector](https://developer.salesforce.com/docs/atlas.en-us.api_streaming.meta/api_streaming/code_sample_java_client_intro.htm)
 
+# Docker Deployment Option
+
+### Config env variables  in `envfile.txt` file
+
+```
+### Use env variables for configuration
+NR_SF_ENV_CONF=true
+
+### New Relic connection info
+NR_SF_INSIGHTS_URL=https://insights-collector.newrelic.com/v1/accounts/<YOUR New Relic RPM ID>/events
+NR_SF_INSIGHTS_INSERT_KEY=<YOUR New Relic Insert Key>
+
+### Salesforce connection info
+NR_SF_URL=https://<YOUR Salesforce instance>.my.salesforce.com
+NR_SF_USERNAME=<YOUR Salesforce login id>
+NR_SF_TOPICS=/event/LoginEventStream,/event/LogoutEventStream,/event/LightningUriEventStream,/event/UriEventStream
+### Use NR_SF_PASSWORD_OBFUSCATED(preferred) or NR_SF_PASSWORD (for testing)
+NR_SF_PASSWORD_OBFUSCATED=<YOUR obfuscated password>
+#NR_SF_PASSWORD=<Clear password> 
+
+
+### Password obfuscation key
+NEW_RELIC_CONFIG_OBSCURING_KEY=<YOUR Password Obfuscation Key>
+
+### how to generate NR_SF_PASSWORD_OBFUSCATED #####
+# newrelic agent config obfuscate --key '<your obfuscation key>' --value '<YOUR Salesforce password>'
+###################################################
+
+### Proxy configuration(optional)
+# NR_SF_PROXY_HOST: <YOUR network proxy host>
+# NR_SF_PROXY_PORT: <YOUR network proxy port>
+# NR_SF_PROXY_USER: <YOUR network proxy user>
+####Use NR_SF_PROXY_PASSWORD_OBFUSCATED(preferred) or NR_SF_PROXY_PASSWORD (for testing)
+# NR_SF_PROXY_PASSWORD_OBFUSCATED: <YOUR network obfuscated password>
+# NR_SF_PROXY_PASSWORD: <YOUR network obfuscated password>
+```
+
+### Start your docker image
+`docker run --env-file envfile.txt -d haihongren/nr-salesforce-event-streaming:1.1.0`
+
+# Host Based Deployment Option
 
 ## 1. Prerequisite
 
@@ -240,6 +281,7 @@ instances:
   }
 }
 ```
+
 
 
 ## Support
