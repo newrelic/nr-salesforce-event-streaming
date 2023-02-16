@@ -31,4 +31,4 @@ NEW_RELIC_CONFIG_OBSCURING_KEY=<YOUR Password Obfuscation Key>
 
 
 ### Labels (optional)
-
+NR_SF_LABELS=source=NR_Salesforce_Event_Streaming,env=production
