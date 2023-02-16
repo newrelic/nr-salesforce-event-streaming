@@ -27,9 +27,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
 
 import static com.salesforce.emp.connector.LoginHelper.login;
 
@@ -39,31 +37,32 @@ public class MonitoringConsumer {
     private InsightsClient insightsClient = null;
     private Instance instance = null;
 
+    private Stats stats=null;
+
     public TopicSubscription connect(Instance instance, InsightsClient client) {
+        logger.info("connecting: " + instance.getUrl());
         this.insightsClient = client;
         this.instance = instance;
-
+        this.stats= new Stats(instance,client);
         try {
             connector = createConsumer(instance);
         } catch (Exception e) {
             // TODO Auto-generated catch block
+            logger.error("failed to connect: " + e.getMessage());
+            logger.error("exiting...");
             e.printStackTrace();
+            System.exit(1);
         }
         try {
             TopicSubscription subscription = connector.subscribe(instance.getChannel(), instance.getRelayfrom(), this::onMessage).get(5, TimeUnit.SECONDS);
             logger.info("==>subscribed: " + instance.getUrl() + subscription);
             return subscription;
-        } catch (InterruptedException e) {
+        } catch (Exception e) {
             // TODO Auto-generated catch block
+            logger.error("failed to subscribe: " + instance.getChannel());
             e.printStackTrace();
-        } catch (ExecutionException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (TimeoutException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
-        return null;
     }
 
     private EmpConnector createConsumer(Instance instance) throws Exception {
@@ -94,11 +93,7 @@ public class MonitoringConsumer {
 
                     return login(new URL(instance.getUrl()), instance.getUsername(), instance.getPassword());
                 }
-
-
             } catch (Exception e) {
-                e.printStackTrace(System.err);
-                System.exit(1);
                 throw new RuntimeException(e);
             }
         });
@@ -163,6 +158,7 @@ public class MonitoringConsumer {
         if (result != true) {
             logger.error("Unable to post events to Insights");
         }
+        stats.incrMessageCount();
 
     }
 
@@ -173,5 +169,7 @@ public class MonitoringConsumer {
         }
     }
 
-
+    public Stats getStats() {
+        return stats;
+    }
 }

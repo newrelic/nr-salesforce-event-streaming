@@ -1,0 +1,19 @@
+<configuration>
+    # Console appender
+    <appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            # Pattern of log message for console appender
+            <Pattern>%d{yyyy-MM-dd HH:mm:ss} %p %m%n</Pattern>
+        </layout>
+    </appender>
+    # Override log level for specified package
+    <logger name="com.newrelic.fit.empcon" level="INFO">
+        <appender-ref ref="stdout" />
+    </logger>
+    <!-- <logger name="com.salesforce.emp.connector" level="INFO">
+        <appender-ref ref="fout" />
+    </logger> -->
+    <!-- <root level="INFO">
+        <appender-ref ref="stdout" />
+    </root> -->
+</configuration>
