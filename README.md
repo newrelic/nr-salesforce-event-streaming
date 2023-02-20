@@ -12,7 +12,7 @@ Refer to the following links for more details.
 
 # Docker Deployment Option
 
-### Config env variables  in `envfile.txt` file
+### 1. Config env variables  in `envfile.txt` file
 
 ```
 ### Use env variables for configuration
@@ -45,9 +45,14 @@ NEW_RELIC_CONFIG_OBSCURING_KEY=<YOUR Password Obfuscation Key>
 ####Use NR_SF_PROXY_PASSWORD_OBFUSCATED(preferred) or NR_SF_PROXY_PASSWORD (for testing)
 # NR_SF_PROXY_PASSWORD_OBFUSCATED: <YOUR network obfuscated password>
 # NR_SF_PROXY_PASSWORD: <YOUR network obfuscated password>
+
+### labels (optional)
+NR_SF_LABELS=source=NR_Salesforce_Event_Streaming,env=production
+
 ```
 
-### Start your docker image
+
+### 2. Start your docker image
 `docker run --env-file envfile.txt -d haihongren/nr-salesforce-event-streaming:1.1.0`
 
 # Host Based Deployment Option
