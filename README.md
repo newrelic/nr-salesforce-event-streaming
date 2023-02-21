@@ -55,6 +55,21 @@ NR_SF_LABELS=source=NR_Salesforce_Event_Streaming,env=production
 ### 2. Start your docker image
 `docker run --env-file envfile.txt -d haihongren/nr-salesforce-event-streaming:1.1.0`
 
+#### 2.1 check logs 
+`docker logs <container id>` 
+
+### 3. check the new eventtypes in New Relic
+
+The integation creates new event type using `SF`+`<Topic Name>` for the event type name. 
+With the default topic setting(NR_SF_TOPICS), the following new event types will be created.
+
+```
+SFLoginEventStream
+SFLogoutEventStream
+SFLightningUriEventStream
+SFUriEventStream
+```
+
 # Host Based Deployment Option
 
 ## 1. Prerequisite
