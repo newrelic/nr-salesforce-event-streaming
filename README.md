@@ -58,7 +58,15 @@ NR_SF_LABELS=source=NR_Salesforce_Event_Streaming,env=production
 #### 2.1 check logs 
 `docker logs <container id>` 
 
-### 3. check the new eventtypes in New Relic
+Look for `... INFO ==>subscribed: ....` message to confirm the integration is able to connect and subscribe to the topics successfully. 
+```
+ 23:42:18 INFO ==>subscribed: https://<YOUR SF Instance>.my.salesforce.comSubscription [/event/LoginEventStream:-1]
+ 23:42:19 INFO ==>subscribed: https://<YOUR SF Instance>.my.salesforce.comSubscription [/event/LogoutEventStream:-1]
+ 23:42:21 INFO ==>subscribed: https://<YOUR SF Instance>.my.salesforce.comSubscription [/event/LightningUriEventStream:-1]
+ 23:42:22 INFO ==>subscribed: https://<YOUR SF Instance>.my.salesforce.comSubscription [/event/UriEventStream:-1]
+```
+
+### 3. check the new event types in New Relic
 
 The integation creates new event type using `SF`+`<Topic Name>` for the event type name. 
 With the default topic setting(NR_SF_TOPICS), the following new event types will be created.
