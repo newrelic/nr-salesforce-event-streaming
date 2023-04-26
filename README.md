@@ -9,6 +9,25 @@ Refer to the following links for more details.
 
 - [SalesForce Streaming API ](https://developer.salesforce.com/docs/atlas.en-us.api_streaming.meta/api_streaming/intro_stream.htm)
 - [EMP Connector](https://developer.salesforce.com/docs/atlas.en-us.api_streaming.meta/api_streaming/code_sample_java_client_intro.htm)
+# Configure Salesforce App
+
+Below is an example configuration. The configuration of your user and authentication settings
+should be based on your organisations security policies.
+
+### 1. Create a Permission Set "API Only" and assign the following System Permissions:
+#### a. API Enabled
+#### b. Api Only User
+#### c. Customize Application
+#### d. View All Data
+
+### 2. Create a User "Integration" with the Role "Standard User" 
+### 3. Create a New Connected App "NewRelic" with the following config
+#### a. Enable OAuth Settings
+#### b. Oauth scopes: api, web, refresh_token, openid, offiline_access, event_api
+#### c. Enable Client Credentials Flow
+#### d. Select Manage, Edit Policies...In Client Credential Flow, Select the user you created
+
+### 3. Save theConsumer Key and Secret for use later
 
 # Docker Deployment Option
 
@@ -29,7 +48,8 @@ NR_SF_TOPICS=/event/LoginEventStream,/event/LogoutEventStream,/event/LightningUr
 ### Use NR_SF_PASSWORD_OBFUSCATED(preferred) or NR_SF_PASSWORD (for testing)
 NR_SF_PASSWORD_OBFUSCATED=<YOUR obfuscated password>
 #NR_SF_PASSWORD=<Clear password> 
-
+ NR_SF_CLIENT_SECRET=<YOUR APP CLIENT SECRET>
+# NR_SF_CLIENT_ID=<YOUR APP CLIENT ID>
 
 ### Password obfuscation key
 NEW_RELIC_CONFIG_OBSCURING_KEY=<YOUR Password Obfuscation Key>
@@ -43,6 +63,7 @@ NEW_RELIC_CONFIG_OBSCURING_KEY=<YOUR Password Obfuscation Key>
 # NR_SF_PROXY_PORT: <YOUR network proxy port>
 # NR_SF_PROXY_USER: <YOUR network proxy user>
 ####Use NR_SF_PROXY_PASSWORD_OBFUSCATED(preferred) or NR_SF_PROXY_PASSWORD (for testing)
+#
 # NR_SF_PROXY_PASSWORD_OBFUSCATED: <YOUR network obfuscated password>
 # NR_SF_PROXY_PASSWORD: <YOUR network obfuscated password>
 
@@ -53,7 +74,7 @@ NR_SF_LABELS=source=NR_Salesforce_Event_Streaming,env=production
 
 
 ### 2. Start your docker image
-`docker run --env-file envfile.txt -d haihongren/nr-salesforce-event-streaming:1.1.0`
+`docker run --env-file envfile.txt -d tobyknight/nr-salesforce-event-streaming:1.1.1`
 
 #### 2.1 check logs 
 `docker logs <container id>` 
@@ -117,17 +138,21 @@ Configure the following setting in config/empcon-config.yml
 
   1. url  
      Your Salesforce instance URL
-  2. username and password  
-     username - your SalesForce '<username>'  
-     password - your SalesForce '<passwrod><security token for the username>'  
-  3. channel  
-     The SalesForce topic to be subscribed to
-  4. replayfrom
-     - `-1` replay event from the tip (new event)  
-     - `-2` replay event from the earliest (in last 24 hours)  
-  5. any additional labels/attributes (optional)
-  6. eventtype  
-     The New Relic Insight event type of your choice for this instance
+     (Basic and oAUTH is Supported)
+   2a. For Basic auth configure username and password  
+      username - your SalesForce '<username>'  
+      password - your SalesForce '<passwrod><security token for the username>'  
+   2b. For oAuth configure username and password  
+     clientsecret - your SalesForce App '<clientsecret>'  
+     clientkey - your SalesForce App '<clientkey>'
+   3. channel  
+      The SalesForce topic to be subscribed to
+   4. replayfrom
+      - `-1` replay event from the tip (new event)  
+      - `-2` replay event from the earliest (in last 24 hours)  
+   5. any additional labels/attributes (optional)
+   6. eventtype  
+      The New Relic Insight event type of your choice for this instance
 
 - Network Proxy (if required)
   1. proxy_host
@@ -136,7 +161,7 @@ Configure the following setting in config/empcon-config.yml
 
 ### 3.1 Password Obfuscation
 
-- Password obfuscatoin is supported for `proxy_password` and `password`
+- Password obfuscation is supported for `proxy_password` and `password`
 
   - use `proxy_password_obfuscated` and `password_obfuscated` in place of `proxy_password` and `password` in the config file
 
