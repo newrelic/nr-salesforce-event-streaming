@@ -13,7 +13,16 @@ public class Instance {
     private static String proxyPassword = null;
     private static String eventprefix = "";
     private String url = null;
+
     private String username = null;
+
+    private static String Code = null;
+
+    private  String ClientSecret = null;
+
+    private  String ClientKey = null;
+
+    private static String RedirectUri = null;
     private String password = null;
     private String channel = null;
     private Long relayfrom = -1L;
@@ -43,6 +52,41 @@ public class Instance {
     public static void setProxyHost(String proxyHost) {
         Instance.proxyHost = proxyHost;
     }
+
+
+    public static  String getCode() {
+        return Code;
+    }
+
+    public static void setCode(String Code) {
+        Instance.Code = Code;
+    }
+
+    public   String getClientSecret() {
+        return ClientSecret;
+    }
+
+    public  void setClientSecret(String clientSecret) {
+        this.ClientSecret = clientSecret;
+    }
+
+    public  String getClientKey() {
+        return ClientKey;
+    }
+
+    public  void setClientKey(String clientKey) {
+        this.ClientKey = clientKey;
+    }
+
+    public static String getRedirectUri() {
+        return RedirectUri;
+    }
+
+    public static void setRedirectUri(String redirectUri) {
+        Instance.RedirectUri = redirectUri;
+    }
+
+
 
     public static int getProxyPort() {
         return proxyPort;
