@@ -8,28 +8,21 @@ import com.newrelic.insights.publish.Event;
 import com.newrelic.insights.publish.InsightsClient;
 import com.salesforce.emp.connector.BayeuxParameters;
 import com.salesforce.emp.connector.EmpConnector;
-import com.salesforce.emp.connector.ProxyBayeuxParameter;
 import com.salesforce.emp.connector.TopicSubscription;
 import com.salesforce.emp.connector.example.BearerTokenProvider;
 import com.salesforce.emp.connector.example.LoggingListener;
 import org.cometd.bayeux.Channel;
-import org.eclipse.jetty.client.HttpProxy;
-import org.eclipse.jetty.client.Origin;
-import org.eclipse.jetty.client.api.Authentication;
-import org.eclipse.jetty.client.util.BasicAuthentication;
 import org.eclipse.jetty.util.ajax.JSON;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.net.URI;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
-import static com.salesforce.emp.connector.LoginHelper.login;
+import static com.newrelic.fit.empcon.AuthHelper.getBayeuxParametersSupplier;
 
 public class MonitoringConsumer {
     private static Logger logger = LoggerFactory.getLogger(MonitoringConsumer.class);
@@ -67,39 +60,11 @@ public class MonitoringConsumer {
 
     private EmpConnector createConsumer(Instance instance) throws Exception {
 
-        BearerTokenProvider tokenProvider = new BearerTokenProvider(() -> {
-            try {
 
-                if (Instance.getProxyHost() != null) {
-
-                    ProxyBayeuxParameter proxyParas = new ProxyBayeuxParameter();
-
-                    String proxyHost = Instance.getProxyHost();
-                    int proxyPort = Instance.getProxyPort();
-
-                    HttpProxy proxy = new HttpProxy(new Origin.Address(proxyHost, proxyPort), false);
-                    proxyParas.addProxy(proxy);
-
-                    if (Instance.getProxyUser() != null) {
-                        String proxy_auth_username = Instance.getProxyUser();
-                        String proxy_auth_password = Instance.getProxyPassword();
-                        BasicAuthentication auth = new BasicAuthentication(new URI("http://" + proxyHost + ":" + proxyPort), Authentication.ANY_REALM, proxy_auth_username, proxy_auth_password);
-                        proxyParas.addAuthentication(auth);
-                    }
-
-                    return login(new URL(instance.getUrl()), instance.getUsername(), instance.getPassword(), proxyParas);
-
-                } else {
-
-                    return login(new URL(instance.getUrl()), instance.getUsername(), instance.getPassword());
-                }
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
-        });
+        BearerTokenProvider tokenProvider = new BearerTokenProvider(getBayeuxParametersSupplier(instance));
 
         BayeuxParameters params = tokenProvider.login();
-
+        logger.debug("cometd endpoint: {}", params.endpoint());
         EmpConnector connector = new EmpConnector(params);
         LoggingListener loggingListener = new LoggingListener(false, true);
 

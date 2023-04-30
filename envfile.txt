@@ -7,11 +7,18 @@ NR_SF_INSIGHTS_INSERT_KEY=<YOUR New Relic Insert Key>
 
 ### Salesforce connection info
 NR_SF_URL=https://<YOUR Salesforce instance>.my.salesforce.com
-NR_SF_USERNAME=<YOUR Salesforce login id>
 NR_SF_TOPICS=/event/LoginEventStream,/event/LogoutEventStream,/event/LightningUriEventStream,/event/UriEventStream
+
+### Basic username and password authentication
+NR_SF_USERNAME=<YOUR Salesforce login id>
 ### Use NR_SF_PASSWORD_OBFUSCATED(preferred) or NR_SF_PASSWORD (for testing)
 NR_SF_PASSWORD_OBFUSCATED=<YOUR obfuscated password>
 #NR_SF_PASSWORD=<Clear password> 
+
+###OAuth2 Client Credentials Flow
+#NR_SF_CLIENT_ID=<YOUR client id>
+#NR_SF_CLIENT_SECRET=<YOUR client secret>
+#https://help.salesforce.com/s/articleView?id=sf.connected_app_client_credentials_setup.htm&type=5
 
 
 ### Password obfuscation key
