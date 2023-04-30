@@ -67,7 +67,7 @@ NR_SF_LABELS=source=NR_Salesforce_Event_Streaming,env=production
 
 
 ### 2. Start your docker image
-`docker run --env-file envfile.txt -d haihongren/nr-salesforce-event-streaming:1.1.0`
+`docker run --env-file envfile.txt -d haihongren/nr-salesforce-event-streaming:1.1.1`
 
 #### 2.1 check logs 
 `docker logs <container id>` 
