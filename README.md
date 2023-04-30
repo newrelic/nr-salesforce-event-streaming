@@ -10,6 +10,11 @@ Refer to the following links for more details.
 - [SalesForce Streaming API ](https://developer.salesforce.com/docs/atlas.en-us.api_streaming.meta/api_streaming/intro_stream.htm)
 - [EMP Connector](https://developer.salesforce.com/docs/atlas.en-us.api_streaming.meta/api_streaming/code_sample_java_client_intro.htm)
 
+#### Supported Salesforce Authentication Method
+- Basic username and password
+- [OAuth 2.0 Client Credentials Flow](https://help.salesforce.com/s/articleView?id=sf.connected_app_client_credentials_setup.htm&type=5)
+
+
 # Docker Deployment Option
 
 ### 1. Config env variables  in `envfile.txt` file
@@ -24,11 +29,20 @@ NR_SF_INSIGHTS_INSERT_KEY=<YOUR New Relic Insert Key>
 
 ### Salesforce connection info
 NR_SF_URL=https://<YOUR Salesforce instance>.my.salesforce.com
-NR_SF_USERNAME=<YOUR Salesforce login id>
 NR_SF_TOPICS=/event/LoginEventStream,/event/LogoutEventStream,/event/LightningUriEventStream,/event/UriEventStream
+
+###Authentication#### 
+###option 1: basic username and password
+NR_SF_USERNAME=<YOUR Salesforce login id>
 ### Use NR_SF_PASSWORD_OBFUSCATED(preferred) or NR_SF_PASSWORD (for testing)
 NR_SF_PASSWORD_OBFUSCATED=<YOUR obfuscated password>
 #NR_SF_PASSWORD=<Clear password> 
+
+###option2: Salesforce OAuth2 Client Credentials Flow
+NR_SF_CLIENT_ID=<YOUR APP CLIENT ID>
+NR_SF_CLIENT_SECRET=<YOUR APP CLIENT SECRET>
+###Instructions on how to setup Oauth2 Client Credentials Flow
+###https://help.salesforce.com/s/articleView?id=sf.connected_app_client_credentials_setup.htm&type=5
 
 
 ### Password obfuscation key
@@ -53,7 +67,7 @@ NR_SF_LABELS=source=NR_Salesforce_Event_Streaming,env=production
 
 
 ### 2. Start your docker image
-`docker run --env-file envfile.txt -d haihongren/nr-salesforce-event-streaming:1.1.0`
+`docker run --env-file envfile.txt -d haihongren/nr-salesforce-event-streaming:1.1.1`
 
 #### 2.1 check logs 
 `docker logs <container id>` 

@@ -1,4 +1,4 @@
-DockerfileFROM openjdk:8-jre-alpine
+FROM openjdk:8-jre-alpine
 ARG JAR_FILE=build/libs/nri-empcon.jar
 ARG LOG_CONFIG_FILE=config/logback.xml.docker
 RUN mkdir -p /apps/config

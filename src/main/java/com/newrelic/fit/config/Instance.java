@@ -14,6 +14,8 @@ public class Instance {
     private static String eventprefix = "";
     private String url = null;
     private String username = null;
+    private  String ClientSecret = null;
+    private  String ClientKey = null;
     private String password = null;
     private String channel = null;
     private Long relayfrom = -1L;
@@ -43,6 +45,23 @@ public class Instance {
     public static void setProxyHost(String proxyHost) {
         Instance.proxyHost = proxyHost;
     }
+
+        public   String getClientSecret() {
+        return ClientSecret;
+    }
+
+    public  void setClientSecret(String clientSecret) {
+        this.ClientSecret = clientSecret;
+    }
+
+    public  String getClientKey() {
+        return ClientKey;
+    }
+
+    public  void setClientKey(String clientKey) {
+        this.ClientKey = clientKey;
+    }
+
 
     public static int getProxyPort() {
         return proxyPort;

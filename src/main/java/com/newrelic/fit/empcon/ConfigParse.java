@@ -74,6 +74,24 @@ public class ConfigParse {
                             inst.setPassword((String) argumentsParser.get("password"));
                         }
 
+                        if (argumentsParser.containsKey("clientsecret")) {
+                            inst.setClientSecret((String) argumentsParser.get("clientsecret"));
+                        }
+
+                        if (argumentsParser.containsKey("clientkey")) {
+                            inst.setClientKey((String) argumentsParser.get("clientkey"));
+                        }
+
+                        if (argumentsParser.containsKey("clientsecret_obfuscated")) {
+                            String clientsecret = Obfuscator.deobfuscateNameUsingKey((String) argumentsParser.get("clientsecret_obfuscated"));
+                            inst.setClientSecret(clientsecret);
+                        }
+
+                        if (argumentsParser.containsKey("clientkey_obfuscated")) {
+                            String clientkey = Obfuscator.deobfuscateNameUsingKey((String) argumentsParser.get("clientkey_obfuscated"));
+                            inst.setClientKey(clientkey);
+                        }
+
                         if (argumentsParser.containsKey("password_obfuscated")) {
                             String password = Obfuscator.deobfuscateNameUsingKey((String) argumentsParser.get("password_obfuscated"));
                             inst.setPassword(password);
@@ -135,12 +153,18 @@ public class ConfigParse {
             String NR_SF_PROXY_PORT = env.getOrDefault("NR_SF_PROXY_PORT", "FALSE");
             String NR_SF_PROXY_PASSWORD = env.getOrDefault("NR_SF_PROXY_PASSWORD", "FALSE");
             String NR_SF_PROXY_PASSWORD_OBFUSCATED = env.getOrDefault("NR_SF_PROXY_PASSWORD_OBFUSCATED", "");
-
+            String NR_SF_PROXY_USER = env.getOrDefault("NR_SF_PROXY_USER", "FALSE");
 
             String NR_SF_URL = env.getOrDefault("NR_SF_URL", "FALSE");
             String NR_SF_USERNAME = env.getOrDefault("NR_SF_USERNAME", "FALSE");
             String NR_SF_PASSWORD = env.getOrDefault("NR_SF_PASSWORD", "FALSE");
             String NR_SF_PASSWORD_OBFUSCATED = env.getOrDefault("NR_SF_PASSWORD_OBFUSCATED", "FALSE");
+
+            String NR_SF_CLIENT_ID = env.getOrDefault("NR_SF_CLIENT_ID", "FALSE");
+            String NR_SF_CLIENT_ID_OBFUSCATED = env.getOrDefault("NR_SF_CLIENT_ID_OBFUSCATED", "FALSE");
+
+            String NR_SF_CLIENT_SECRET = env.getOrDefault("NR_SF_CLIENT_SECRET", "FALSE");
+            String NR_SF_CLIENT_SECRET_OBFUSCATED = env.getOrDefault("NR_SF_CLIENT_SECRET_OBFUSCATED", "FALSE");
 
             String NR_SF_TOPICS = env.getOrDefault("NR_SF_TOPICS", NR_SF_TOPICS_DEFAULT);
             String NR_SF_REPLAYFROM = env.getOrDefault("NR_SF_REPLAYFROM", "-1");
@@ -175,6 +199,10 @@ public class ConfigParse {
                 String password = Obfuscator.deobfuscateNameUsingKey(NR_SF_PROXY_PASSWORD_OBFUSCATED);
                 Instance.setProxyPassword(password);
             }
+            if (!NR_SF_USERNAME.equals("FALSE")) {
+                Instance.setProxyUser(NR_SF_USERNAME);
+            }
+
 
             String[] topics = NR_SF_TOPICS.split("\\s*,\\s*");
             for (String topic : topics) {
@@ -197,6 +225,23 @@ public class ConfigParse {
                         String password = Obfuscator.deobfuscateNameUsingKey(NR_SF_PASSWORD_OBFUSCATED);
                         inst.setPassword(password);
                     }
+
+                    if (!NR_SF_CLIENT_ID.equals("FALSE")) {
+                        inst.setClientKey(NR_SF_CLIENT_ID);
+                    }
+                    if (!NR_SF_CLIENT_ID_OBFUSCATED.equals("FALSE")) {
+                        String clientkey = Obfuscator.deobfuscateNameUsingKey(NR_SF_CLIENT_ID_OBFUSCATED);
+                        inst.setClientKey(clientkey);
+                    }
+
+                    if (!NR_SF_CLIENT_SECRET.equals("FALSE")) {
+                        inst.setClientSecret(NR_SF_CLIENT_SECRET);
+                    }
+                    if (!NR_SF_CLIENT_SECRET_OBFUSCATED.equals("FALSE")) {
+                        String clientsecret = Obfuscator.deobfuscateNameUsingKey(NR_SF_CLIENT_SECRET_OBFUSCATED);
+                        inst.setClientSecret(clientsecret);
+                    }
+
 
                     if (!NR_SF_REPLAYFROM.isEmpty()) {
                         Integer replayfrom = Integer.parseInt(NR_SF_REPLAYFROM);
