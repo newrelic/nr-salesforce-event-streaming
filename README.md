@@ -1,5 +1,3 @@
-# NRI-EMPCON Integration for SalesForce Streaming API
-
 [![New Relic Community header](https://opensource.newrelic.com/static/Community_Project-0c3079a4e4dbe2cbd05edc4f8e169d7b.png)](https://opensource.newrelic.com/oss-category/#new-relic-community)
 
 ![GitHub forks](https://img.shields.io/github/forks/newrelic/nr-salesforce-event-streaming?style=social)
@@ -17,7 +15,7 @@
 ![GitHub pull requests closed](https://img.shields.io/github/issues-pr-closed/newrelic/nr-salesforce-event-streaming)
 
 
-
+# NRI-EMPCON Integration for SalesForce Streaming API
 This integration subscribes to and replays SalesForce streaming events using EMP Connector.
 The event will be transformed and ingested into New Relic Insight.
 
