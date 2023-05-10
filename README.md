@@ -1,6 +1,22 @@
-[![New Relic Experimental header](https://github.com/newrelic/opensource-website/raw/master/src/images/categories/Experimental.png)](https://opensource.newrelic.com/oss-category/#new-relic-experimental)
-
 # NRI-EMPCON Integration for SalesForce Streaming API
+
+[![New Relic Community header](https://opensource.newrelic.com/static/Community_Project-0c3079a4e4dbe2cbd05edc4f8e169d7b.png)](https://opensource.newrelic.com/oss-category/#new-relic-community)
+
+![GitHub forks](https://img.shields.io/github/forks/newrelic/nr-salesforce-event-streaming?style=social)
+![GitHub stars](https://img.shields.io/github/stars/newrelic/nr-salesforce-event-streaming?style=social)
+![GitHub watchers](https://img.shields.io/github/watchers/newrelic/nr-salesforce-event-streaming?style=social)
+
+![GitHub all releases](https://img.shields.io/github/downloads/newrelic/nr-salesforce-event-streaming/total)
+![GitHub release (latest by date)](https://img.shields.io/github/v/release/newrelic/nr-salesforce-event-streaming)
+![GitHub last commit](https://img.shields.io/github/last-commit/newrelic/nr-salesforce-event-streaming)
+![GitHub Release Date](https://img.shields.io/github/release-date/newrelic/nr-salesforce-event-streaming)
+
+![GitHub issues](https://img.shields.io/github/issues/newrelic/nr-salesforce-event-streaming)
+![GitHub issues closed](https://img.shields.io/github/issues-closed/newrelic/nr-salesforce-event-streaming)
+![GitHub pull requests](https://img.shields.io/github/issues-pr/newrelic/nr-salesforce-event-streaming)
+![GitHub pull requests closed](https://img.shields.io/github/issues-pr-closed/newrelic/nr-salesforce-event-streaming)
+
+
 
 This integration subscribes to and replays SalesForce streaming events using EMP Connector.
 The event will be transformed and ingested into New Relic Insight.
